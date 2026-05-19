@@ -1,26 +1,33 @@
 import sqlite3
 
-conn = sqlite3.connect("student.db")
-cursor = conn.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS Students (name, regNo, laptopModel, serialNumber )")
+db  = sqlite3.connect("lapify.db")
+
+csr = db.cursor()
+
+csr.execute("CREATE TABLE IF NOT EXISTS Students (reg_no, full_name, school, department )")
+csr.execte("CREATE TABLE IF NOT EXISTS Laptops (laptop_id, serial_no, owner_reg_no,  laptop_model, laptop_colour)")
+csr.ececute("CREATE TABLE IF NOT EXISTS Logs(log_id, laptop_id, reg_no, event, timestamp)")
 
 class Student:
     def __init__(self, db_connection, db_cursor):
-        self.conn = db_connection
-        self.cursor = db_cursor
+        self.db = db_connection
+        self.csr = db_cursor
 
     def get_student_details(self):
-        name = input("Enter Name: ")
-        regNo = input("Enter Regitstration Number: ")
-        laptopModel = input("Enter Laptop Model: ")
-        serialNumber = input("Enter serial Number: ")
+        reg_no = input("Enter Registration Number: ")
+        name  = input("Enter Full Names: ")
+        school = input("Enter School: ")
+        department = input("Enter Department: ")
 
-        self.cursor.execute("INSERT INTO Students VALUES (?, ?, ?, ?)", (name, regNo, laptopModel, serialNumber))
-        self.conn.commit()
+        self.csr.execute("INSERT INTO Students VALUES (?, ?, ?, ?)", (reg_no, name, school, department))
+        self.db.commit()
         print("Student details saved Successfully!")
 
+    def get_laptop_details(self):
+        
 
-registry = Student(conn, cursor)
+
+registry = Student(db, csr)
 
 while True:
     registry.get_student_details()
@@ -31,4 +38,4 @@ while True:
      print("End of File")
      break
 
-conn.close()
+db.close()
