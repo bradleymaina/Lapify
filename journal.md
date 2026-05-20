@@ -14,3 +14,8 @@ when inserting the values to the table , it is important to not feed the values 
 it is good practise to close the database .( end the call)
 `db.close()`
 
+2026-05-21
+use docstrings to use multiple lines for a table
+use sys library for system errors
+use .strip() function to remove whitespace
+
